@@ -16,9 +16,9 @@ export default class Grid extends Component {
 
     this.state = {
       screenClass: 'lg',
-      gutterWidth: searchParams.get('gutterWidth') || 16,
+      gutterWidth: parseInt(searchParams.get('gutterWidth')) || 16,
       withSideMenu: searchParams.get('sideMenu') === '1',
-      fluid: searchParams.get('fluid') === '1',
+      fluid: (searchParams.get('fluid') === '1'),
       showOverlay: searchParams.get('overlay') === '1',
     }
     
