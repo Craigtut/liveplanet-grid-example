@@ -6,7 +6,7 @@ export default class Measure extends Component {
     const { distance, style } = this.props;
 
     return (
-      <div style={{ ...styles.container, ...style, width: distance }}>
+      <div style={{ ...styles.container, ...style, width: `${distance}px` }}>
         <p style={styles.text}>{distance}</p>
         <div style={styles.drawing}>
           <div style={{ width: 2, height: 24, backgroundColor: 'red' }} />

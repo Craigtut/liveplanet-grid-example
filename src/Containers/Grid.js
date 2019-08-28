@@ -6,8 +6,14 @@ import Overlay from '../Components/Overlay';
 
 
 const breakpoints = Object.values({ sm: 320, md: 600, lg: 1024, xl: 1440 });
-const minMargins = { sm: 24, md: 24, lg: 64, xl: 64 };
 const grid = { xs: 4, sm: 4, md: 8, lg: 12, xl: 12 };
+
+const parseMargins = (marginString) => {
+  if (!marginString) return null;
+
+  const marginArray = marginString.split(',');
+  return { sm: marginArray[0], md: marginArray[1], lg: marginArray[2], xl: marginArray[3]}
+}
 
 export default class Grid extends Component {
   constructor(props) {
@@ -16,6 +22,7 @@ export default class Grid extends Component {
 
     this.state = {
       screenClass: 'lg',
+      minMargins: parseMargins(searchParams.get('margins')) || { sm: 24, md: 24, lg: 64, xl: 64 },
       gutterWidth: parseInt(searchParams.get('gutterWidth')) || 16,
       withSideMenu: searchParams.get('sideMenu') === '1',
       fluid: (searchParams.get('fluid') === '1'),
@@ -49,7 +56,7 @@ export default class Grid extends Component {
   }
 
   render() {
-    const { screenClass, gutterWidth, withSideMenu, fluid, showOverlay } = this.state;
+    const { screenClass, gutterWidth, withSideMenu, fluid, showOverlay, minMargins } = this.state;
   
     const containerWidths = (() => breakpoints.map((breakpoint, i) => breakpoint - (Object.values(minMargins)[i] * 2) + gutterWidth))();
     const configureGrid = (screenClass) => {
@@ -93,7 +100,7 @@ export default class Grid extends Component {
           </Row>
           </Container>
         </div>
-        {(showOverlay) ? <Overlay fluid={fluid} sidebar={shouldHaveMenu} screenClass={screenClass} gutterWidth={gutterWidth} /> : null }
+        {(showOverlay) ? <Overlay fluid={fluid} sidebar={shouldHaveMenu} screenClass={screenClass} gutterWidth={gutterWidth} margins={minMargins} /> : null }
       </div>
     );
   }

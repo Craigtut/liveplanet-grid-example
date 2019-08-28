@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container, Row, Col as Column } from 'react-grid-system';
 import Measure from './Measure';
 
-const minMargins = { sm: 24, md: 24, lg: 64, xl: 64 };
 
 export default class Overlay extends Component {
 
@@ -15,15 +14,15 @@ export default class Overlay extends Component {
   }
 
   render() {
-    const { screenClass, fluid, gutterWidth, sidebar } = this.props;
-    const margins = (fluid) ? `0 ${minMargins[screenClass] - gutterWidth/2}px` : 0;
+    const { screenClass, fluid, gutterWidth, sidebar, margins } = this.props;
+    const marginStyle = (fluid) ? `0 ${margins[screenClass] - gutterWidth/2}px` : 0;
 
     return (
       <div style={styles.overlay}>
         {(sidebar) ? <div style={styles.sideBar} /> : null }
-        <div style={{ display: 'block', flex: 1, margin: margins }}>
-          <Measure style={{ left: (sidebar) ? 92 : 0}} distance={minMargins[screenClass]} />
-          <Measure style={{ right: 0}} distance={minMargins[screenClass]} />
+        <div style={{ display: 'block', flex: 1, margin: marginStyle }}>
+          <Measure style={{ left: (sidebar) ? 92 : 0}} distance={margins[screenClass]} />
+          <Measure style={{ right: 0}} distance={margins[screenClass]} />
           <Container fluid={fluid} style={styles.container}>
             <Row>
               {this.renderColumns()}
